@@ -491,6 +491,9 @@ export default function LandingPage() {
           .float-sutil-anim {
             animation: none !important;
           }
+          video {
+            display: none !important;
+          }
         }
       ` }} />
 
@@ -572,6 +575,19 @@ export default function LandingPage() {
           <div className="mesh-gradient mesh-gradient-2"></div>
           <div className="mesh-gradient mesh-gradient-3"></div>
         </div>
+        
+        {/* Embedded Video Hero Background */}
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none"
+          style={{ mixBlendMode: 'screen', zIndex: 0 }}
+        >
+          <source src="Vídeo Hero.mp4" type="video/mp4" />
+        </video>
+
         <div className="hero-grain"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/30 to-[#0A0A0A]/60 pointer-events-none z-1"></div>
 
