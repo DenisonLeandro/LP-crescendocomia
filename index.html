@@ -48,12 +48,59 @@
       ChevronDown,
       Star,
       Menu,
-      X
+      X,
+      Building2,
+      TrendingUp,
+      Check
     } from 'https://esm.sh/lucide-react@0.244.0';
+
+    // Custom Hook to manage scroll-based fade-in animations using IntersectionObserver
+    const useScrollAnimation = () => {
+      const elementsRef = useRef([]);
+
+      useEffect(() => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (prefersReduced) {
+                  entry.target.classList.add('scroll-visible-instant');
+                } else {
+                  entry.target.classList.add('scroll-visible');
+                }
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+        );
+
+        const currentElements = elementsRef.current;
+        currentElements.forEach((el) => {
+          if (el) observer.observe(el);
+        });
+
+        return () => {
+          currentElements.forEach((el) => {
+            if (el) observer.unobserve(el);
+          });
+        };
+      }, []);
+
+      const addToRefs = (el) => {
+        if (el && !elementsRef.current.includes(el)) {
+          elementsRef.current.push(el);
+        }
+      };
+
+      return addToRefs;
+    };
 
     function LandingPage() {
       const [scrolled, setScrolled] = useState(false);
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      const scrollRef = useScrollAnimation();
 
       // Monitor page scroll to update Navbar appearance
       useEffect(() => {
@@ -73,7 +120,7 @@
       };
 
       return (
-        <div className="min-h-screen bg-black text-white relative selection:bg-blue-light selection:text-blue-primary font-inter">
+        <div className="min-h-screen text-dark-black relative selection:bg-blue-light selection:text-blue-primary font-inter">
           {/* 
             Embedded CSS Stylesheet
             Specifies absolute scales, custom animations, mesh gradient positions and responsive overrides.
@@ -399,6 +446,10 @@
               transform: translateY(20px);
               transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             }
+            .mobile-nav-link.open {
+              opacity: 1;
+              transform: translateY(0);
+            }
             .mobile-menu-overlay.open .mobile-nav-link {
               opacity: 1;
               transform: translateY(0);
@@ -415,6 +466,55 @@
               transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             }
 
+            /* ------------------------------------------------------------- */
+            /* Scroll Animations Base & Overrides                            */
+            /* ------------------------------------------------------------- */
+
+            .scroll-animate {
+              opacity: 0;
+              transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+              will-change: transform, opacity;
+            }
+            .scroll-animate.transition-fade-slide-left {
+              transform: translateX(-30px);
+            }
+            .scroll-animate.transition-fade-slide-right {
+              transform: translateX(20px);
+            }
+            .scroll-animate.transition-fade-slide-up {
+              transform: translateY(15px);
+            }
+            .scroll-animate.transition-fade-scale {
+              transform: scale(0.9);
+            }
+
+            /* Target state when scroll is visible */
+            .scroll-visible.transition-fade-slide-left,
+            .scroll-visible.transition-fade-slide-right,
+            .scroll-visible.transition-fade-slide-up {
+              opacity: 1;
+              transform: translate(0, 0);
+            }
+            .scroll-visible.transition-fade-scale {
+              opacity: 1;
+              transform: scale(1);
+            }
+
+            .scroll-visible-instant {
+              opacity: 1 !important;
+              transform: none !important;
+              transition: none !important;
+            }
+
+            /* Keyframe sutil float para card de metrica */
+            @keyframes floatSutil {
+              0% { transform: translateY(-6px); }
+              100% { transform: translateY(6px); }
+            }
+            .float-sutil-anim {
+              animation: floatSutil 4s ease-in-out infinite alternate;
+            }
+
             /* Accessibility: Prefers reduced motion overrides */
             @media (prefers-reduced-motion: reduce) {
               * {
@@ -425,13 +525,17 @@
               .animate-hero,
               .chat-bubble-entry,
               .logo-icon-pulse,
-              .mockup-3d-float {
+              .mockup-3d-float,
+              .scroll-animate {
                 opacity: 1 !important;
                 transform: none !important;
                 animation: none !important;
               }
               .mockup-3d-float {
                 transform: perspective(1200px) rotateY(-8deg) rotateX(3deg) !important;
+              }
+              .float-sutil-anim {
+                animation: none !important;
               }
             }
           ` }} />
@@ -636,6 +740,180 @@
                     </div>
 
                   </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* SEÇÃO SOBRE */}
+          <section 
+            id="sobre" 
+            className="w-full bg-[#F5F5F0] border-t border-black/5" 
+            style={{ scrollMarginTop: '80px', padding: '120px 0' }}
+          >
+            <style dangerouslySetInnerHTML={{ __html: `
+              @media (max-width: 768px) {
+                #sobre {
+                  padding: 64px 0 !important;
+                }
+              }
+            `}} />
+            <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-[80px] items-center">
+              
+              {/* Coluna Esquerda - Visual Placeholder (topo no mobile) */}
+              <div className="order-1 md:order-1 flex justify-center w-full">
+                <div 
+                  ref={scrollRef} 
+                  className="scroll-animate transition-fade-slide-left relative w-full aspect-[4/5] max-w-[400px]"
+                  style={{ transitionDuration: '0.7s', transitionDelay: '0s' }}
+                >
+                  {/* Card principal */}
+                  <div 
+                    className="w-full h-full rounded-[24px] overflow-hidden flex flex-col items-center justify-center gap-4"
+                    style={{ 
+                      background: 'linear-gradient(145deg, #EBF4FF 0%, #DBEAFE 60%, #EDE9FE 100%)',
+                      boxShadow: '0 20px 60px rgba(37, 99, 235, 0.12), 0 4px 16px rgba(0,0,0,0.06)'
+                    }}
+                  >
+                    <Building2 className="w-12 h-12 text-[#2563EB] opacity-40" />
+                    <span className="font-inter text-[0.85rem] font-normal text-[#6B7280] opacity-60">
+                      Foto da equipe em breve
+                    </span>
+                  </div>
+
+                  {/* Floating element 1 (bottom right card) */}
+                  <div 
+                    ref={scrollRef}
+                    className="scroll-animate transition-fade-scale absolute bottom-[-20px] right-[-20px] bg-white rounded-[16px] p-4 pr-5 shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-[#2563EB]/[0.08] float-sutil-anim flex items-center gap-3"
+                    style={{ transitionDuration: '0.5s', transitionDelay: '0.2s', zIndex: 10 }}
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-[#10B981]/10 flex items-center justify-center text-[#10B981] flex-shrink-0">
+                      <TrendingUp className="w-5 h-5 text-[#10B981]" />
+                    </div>
+                    <div>
+                      <div className="font-sora font-bold text-base text-[#1A1A1A] leading-tight">+500 empresas</div>
+                      <div className="font-inter text-xs text-[#6B7280] leading-none mt-1">atendidas</div>
+                    </div>
+                  </div>
+
+                  {/* Floating element 2 - Badge (top left) */}
+                  <div 
+                    className="absolute top-[-12px] left-[24px] bg-[#2563EB] text-white rounded-full px-4 py-1.5 font-inter text-[0.78rem] font-semibold shadow-[0_4px_12px_rgba(37,99,235,0.3)]"
+                    style={{ zIndex: 10 }}
+                  >
+                    Desde 2024
+                  </div>
+                </div>
+              </div>
+
+              {/* Coluna Direita - Texto */}
+              <div className="order-2 md:order-2 flex flex-col items-start w-full">
+                {/* Eyebrow / Tag */}
+                <div 
+                  ref={scrollRef}
+                  className="scroll-animate transition-fade-slide-up flex items-center gap-3"
+                  style={{ transitionDuration: '0.5s', transitionDelay: '0.1s' }}
+                >
+                  <div className="w-8 h-[2px] bg-[#2563EB] rounded-[2px]"></div>
+                  <span className="font-inter text-[0.75rem] font-semibold tracking-[0.12em] text-[#2563EB] uppercase">
+                    SOBRE NÓS
+                  </span>
+                </div>
+
+                {/* Headline H2 */}
+                <h2 
+                  ref={scrollRef}
+                  className="scroll-animate transition-fade-slide-up font-sora font-bold text-[#1A1A1A] leading-[1.15] tracking-[-0.02em] mt-4 max-w-[520px]"
+                  style={{ fontSize: 'clamp(1.7rem, 3.5vw, 2.6rem)', transitionDuration: '0.6s', transitionDelay: '0.2s' }}
+                >
+                  Transformamos negócios com o poder da Inteligência Artificial
+                </h2>
+
+                {/* Parágrafo 1 */}
+                <p 
+                  ref={scrollRef}
+                  className="scroll-animate transition-fade-slide-up font-inter text-base font-normal text-[#6B7280] leading-[1.7] mt-5 max-w-[480px]"
+                  style={{ transitionDuration: '0.5s', transitionDelay: '0.3s' }}
+                >
+                  A Crescendo com IA nasceu para simplificar a rotina de empresários que querem crescer sem complicação. Nossas plataformas usam inteligência artificial de verdade para automatizar o que mais consome tempo no seu dia.
+                </p>
+
+                {/* Parágrafo 2 */}
+                <p 
+                  ref={scrollRef}
+                  className="scroll-animate transition-fade-slide-up font-inter text-base font-semibold text-[#1A1A1A] leading-[1.7] mt-3 max-w-[480px]"
+                  style={{ transitionDuration: '0.5s', transitionDelay: '0.35s' }}
+                >
+                  Menos trabalho manual. Mais clientes atendidos. Mais conteúdo publicado. Sem precisar entender de tecnologia.
+                </p>
+
+                {/* Lista de Benefícios */}
+                <div className="flex flex-col gap-4 mt-8 w-full">
+                  {/* Item 1 */}
+                  <div 
+                    ref={scrollRef}
+                    className="scroll-animate transition-fade-slide-right flex items-start gap-3.5"
+                    style={{ transitionDuration: '0.5s', transitionDelay: '0.4s' }}
+                  >
+                    <div className="w-6 h-6 rounded-full bg-[#2563EB]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="w-3.5 h-3.5 text-[#2563EB]" style={{ strokeWidth: 3 }} />
+                    </div>
+                    <div>
+                      <h4 className="font-inter text-[0.95rem] font-bold text-[#1A1A1A]">Tecnologia acessível para qualquer segmento</h4>
+                      <p className="font-inter text-[0.875rem] font-normal text-[#6B7280] leading-[1.5] mt-0.5">Não importa o tamanho ou área do seu negócio. Se você tem clientes, temos solução.</p>
+                    </div>
+                  </div>
+
+                  {/* Item 2 */}
+                  <div 
+                    ref={scrollRef}
+                    className="scroll-animate transition-fade-slide-right flex items-start gap-3.5"
+                    style={{ transitionDuration: '0.5s', transitionDelay: '0.5s' }}
+                  >
+                    <div className="w-6 h-6 rounded-full bg-[#2563EB]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="w-3.5 h-3.5 text-[#2563EB]" style={{ strokeWidth: 3 }} />
+                    </div>
+                    <div>
+                      <h4 className="font-inter text-[0.95rem] font-bold text-[#1A1A1A]">Plataformas intuitivas e fáceis de usar</h4>
+                      <p className="font-inter text-[0.875rem] font-normal text-[#6B7280] leading-[1.5] mt-0.5">Interface simples, sem complicação. Se você usa WhatsApp, você usa nossas ferramentas.</p>
+                    </div>
+                  </div>
+
+                  {/* Item 3 */}
+                  <div 
+                    ref={scrollRef}
+                    className="scroll-animate transition-fade-slide-right flex items-start gap-3.5"
+                    style={{ transitionDuration: '0.5s', transitionDelay: '0.6s' }}
+                  >
+                    <div className="w-6 h-6 rounded-full bg-[#2563EB]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="w-3.5 h-3.5 text-[#2563EB]" style={{ strokeWidth: 3 }} />
+                    </div>
+                    <div>
+                      <h4 className="font-inter text-[0.95rem] font-bold text-[#1A1A1A]">Suporte humanizado e consultoria personalizada</h4>
+                      <p className="font-inter text-[0.875rem] font-normal text-[#6B7280] leading-[1.5] mt-0.5">Nada de chatbot. Nosso time de verdade está disponível para te ajudar sempre.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA inline */}
+                <div 
+                  ref={scrollRef}
+                  className="scroll-animate transition-fade-slide-up flex items-center gap-5 mt-10 flex-wrap"
+                  style={{ transitionDuration: '0.5s', transitionDelay: '0.7s' }}
+                >
+                  <a 
+                    href="#"
+                    className="btn inline-flex items-center justify-center bg-[#2563EB] text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-[#1E40AF] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(37,99,235,0.3)] active:translate-y-0"
+                  >
+                    Fale com um Consultor
+                  </a>
+                  <a 
+                    href="#plataformas"
+                    className="font-inter text-[0.9rem] font-semibold text-[#2563EB] transition-colors hover:text-[#1E40AF] hover:underline"
+                  >
+                    Ver nossas plataformas &rarr;
+                  </a>
                 </div>
               </div>
 
