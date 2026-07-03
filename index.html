@@ -540,7 +540,7 @@
           ` }} />
 
           {/* NAVBAR */}
-          <nav className={`navbar-main \${scrolled ? 'nav-scrolled shadow-lg' : ''}\`}>
+          <nav className={scrolled ? 'navbar-main nav-scrolled shadow-lg' : 'navbar-main'}>
             <div className="max-w-[1200px] mx-auto px-6 h-[72px] flex items-center justify-between">
               
               {/* Left - Logo */}
@@ -581,7 +581,7 @@
           </nav>
 
           {/* MOBILE MENU OVERLAY */}
-          <div className={\`mobile-menu-overlay \${mobileMenuOpen ? 'open' : ''}\`}>
+          <div className={mobileMenuOpen ? 'mobile-menu-overlay open' : 'mobile-menu-overlay'}>
             {/* Close Button */}
             <button 
               onClick={() => setMobileMenuOpen(false)}
