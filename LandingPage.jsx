@@ -22,7 +22,15 @@ import {
   MoreVertical,
   Send,
   Image,
-  CheckCheck
+  CheckCheck,
+  MessageCircle,
+  Settings,
+  Rocket,
+  Brain,
+  LayoutDashboard,
+  Smartphone,
+  Headphones,
+  Globe
 } from 'lucide-react';
 
 // Custom Hook to manage scroll-based fade-in animations using IntersectionObserver
@@ -567,6 +575,87 @@ export default function LandingPage() {
           transform: translateY(-4px);
         }
 
+        /* ------------------------------------------------------------- */
+        /* Section 4 & 5 Custom Styles                                   */
+        /* ------------------------------------------------------------- */
+
+        /* Connectors between steps (Desktop) */
+        .steps-container {
+          position: relative;
+        }
+        .step-connector-1 {
+          position: absolute;
+          top: 40px;
+          left: calc(16.66% + 40px);
+          width: calc(33.33% - 80px);
+          border-top: 2px dashed rgba(37, 99, 235, 0.25);
+          pointer-events: none;
+        }
+        .step-connector-2 {
+          position: absolute;
+          top: 40px;
+          left: calc(50% + 40px);
+          width: calc(33.33% - 80px);
+          border-top: 2px dashed rgba(37, 99, 235, 0.25);
+          pointer-events: none;
+        }
+
+        /* Hover glows for Step circles */
+        .step-card-group:hover .step-icon-container {
+          background-color: rgba(37, 99, 235, 0.2);
+          border-color: rgba(37, 99, 235, 0.4);
+          box-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Card 3D effect and pseudo elements for Section 5 */
+        .feature-card {
+          background-color: var(--color-white);
+          border-radius: 16px;
+          border: 1px solid var(--color-gray-300);
+          position: relative;
+          overflow: hidden;
+          cursor: default;
+          transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .feature-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 120px;
+          height: 120px;
+          background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.06), transparent 70%);
+          border-radius: 0 16px 0 0;
+          opacity: 0;
+          transition: opacity 0.35s ease;
+          pointer-events: none;
+        }
+        .feature-card:hover {
+          border-color: var(--color-blue);
+          box-shadow: 0 8px 30px rgba(37, 99, 235, 0.1);
+          transform: translateY(-4px);
+        }
+        .feature-card:hover::before {
+          opacity: 1;
+        }
+
+        .feature-card-icon-wrapper {
+          width: 48px;
+          height: 48px;
+          border-radius: 12px;
+          background-color: rgba(37, 99, 235, 0.08);
+          border: 1px solid rgba(37, 99, 235, 0.12);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 20px;
+          transition: all 0.35s ease;
+        }
+        .feature-card:hover .feature-card-icon-wrapper {
+          background-color: rgba(37, 99, 235, 0.15);
+          border-color: rgba(37, 99, 235, 0.25);
+        }
+
         /* Accessibility: Prefers reduced motion overrides */
         @media (prefers-reduced-motion: reduce) {
           * {
@@ -591,8 +680,10 @@ export default function LandingPage() {
           .dashboard-float,
           .sparkle-glow,
           .dot-pulse::after,
-          .shimmer-bg::after {
+          .shimmer-bg::after,
+          .step-card-group:hover .step-icon-container {
             animation: none !important;
+            box-shadow: none !important;
           }
           video {
             display: none !important;
@@ -1384,6 +1475,377 @@ export default function LandingPage() {
                 </div>
               </div>
 
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SEÇÃO COMO FUNCIONA */}
+      <section 
+        id="como-funciona" 
+        className="w-full bg-[#0A0A0A] relative overflow-hidden animate-visible" 
+        style={{ scrollMarginTop: '80px', padding: '120px 0' }}
+      >
+        <style dangerouslySetInnerHTML={{ __html: `
+          @media (max-width: 768px) {
+            #como-funciona {
+              padding: 72px 0 !important;
+            }
+          }
+        `}} />
+
+        {/* Gradientes atmosféricos de fundo */}
+        <div 
+          className="absolute inset-0 pointer-events-none" 
+          style={{
+            backgroundImage: `
+              radial-gradient(ellipse 700px 400px at 10% 50%, rgba(37,99,235,0.07), transparent),
+              radial-gradient(ellipse 500px 500px at 90% 50%, rgba(37,99,235,0.05), transparent)
+            `,
+            zIndex: 0
+          }}
+        ></div>
+
+        <div className="max-w-[1200px] mx-auto px-6 relative z-10">
+          
+          {/* CABEÇALHO DA SEÇÃO */}
+          <div className="text-center mb-[80px] max-md:mb-[56px] flex flex-col items-center">
+            {/* Eyebrow */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up flex items-center gap-4"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0s' }}
+            >
+              <div className="w-10 h-[2px] bg-[#2563EB]/50 rounded-[2px]"></div>
+              <span className="font-inter text-[0.75rem] font-semibold tracking-[0.12em] text-[#2563EB] uppercase">
+                COMO FUNCIONA
+              </span>
+              <div className="w-10 h-[2px] bg-[#2563EB]/50 rounded-[2px]"></div>
+            </div>
+
+            {/* H2 */}
+            <h2 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up font-sora font-bold text-white leading-[1.15] tracking-[-0.02em] mt-3.5"
+              style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', transitionDuration: '0.6s', transitionDelay: '0.1s' }}
+            >
+              Comece em 3 passos simples
+            </h2>
+
+            {/* Subtexto */}
+            <p 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up font-inter text-base font-normal text-white/55 leading-[1.6] mt-3.5 max-w-[480px] mx-auto"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.2s' }}
+            >
+              Sem burocracia. Sem complicação técnica. Do primeiro contato ao negócio no automático em menos de 48 horas.
+            </p>
+          </div>
+
+          {/* PASSOS CONTAINER */}
+          <div className="steps-container grid grid-cols-1 md:grid-cols-3 gap-0">
+            {/* Conectores Desktop */}
+            <div className="hidden md:block step-connector-1"></div>
+            <div className="hidden md:block step-connector-2"></div>
+
+            {/* Passo 1 */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up step-card-group flex flex-col items-center text-center px-8 relative"
+              style={{ transitionDuration: '0.6s', transitionDelay: '0.1s' }}
+            >
+              <div className="relative mb-7">
+                <div className="step-icon-container w-[80px] h-[80px] rounded-full bg-[#2563EB]/10 border border-[#2563EB]/20 flex items-center justify-center relative z-10 transition-all duration-300">
+                  <MessageCircle className="w-8 h-8 text-[#2563EB]" />
+                </div>
+                <div 
+                  className="absolute top-[-4px] right-[-4px] w-6 h-6 rounded-full bg-[#2563EB] text-white font-sora text-[0.72rem] font-bold flex items-center justify-center border-2 border-[#0A0A0A] z-20"
+                >
+                  1
+                </div>
+              </div>
+              <h4 className="font-sora font-semibold text-[1.15rem] text-white mb-3">
+                Fale com um consultor
+              </h4>
+              <p className="font-inter text-[0.9rem] text-white/55 leading-[1.65] max-w-[240px] mx-auto">
+                Entre em contato e nos conte sobre seu negócio. Em minutos você entende qual plataforma é ideal para você.
+              </p>
+            </div>
+
+            {/* Conector Mobile 1 */}
+            <div className="md:hidden w-full py-4 flex justify-center">
+              <div className="w-[2px] h-10 border-l-2 border-dashed border-[#2563EB]/25"></div>
+            </div>
+
+            {/* Passo 2 */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up step-card-group flex flex-col items-center text-center px-8 relative"
+              style={{ transitionDuration: '0.6s', transitionDelay: '0.25s' }}
+            >
+              <div className="relative mb-7">
+                <div className="step-icon-container w-[80px] h-[80px] rounded-full bg-[#2563EB]/10 border border-[#2563EB]/20 flex items-center justify-center relative z-10 transition-all duration-300">
+                  <Settings className="w-8 h-8 text-[#2563EB]" />
+                </div>
+                <div 
+                  className="absolute top-[-4px] right-[-4px] w-6 h-6 rounded-full bg-[#2563EB] text-white font-sora text-[0.72rem] font-bold flex items-center justify-center border-2 border-[#0A0A0A] z-20"
+                >
+                  2
+                </div>
+              </div>
+              <h4 className="font-sora font-semibold text-[1.15rem] text-white mb-3">
+                Nossa equipe configura tudo
+              </h4>
+              <p className="font-inter text-[0.9rem] text-white/55 leading-[1.65] max-w-[240px] mx-auto">
+                Sem precisar instalar nada ou entender de tecnologia. Nossa equipe cuida de toda a configuração inicial por você.
+              </p>
+            </div>
+
+            {/* Conector Mobile 2 */}
+            <div className="md:hidden w-full py-4 flex justify-center">
+              <div className="w-[2px] h-10 border-l-2 border-dashed border-[#2563EB]/25"></div>
+            </div>
+
+            {/* Passo 3 */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up step-card-group flex flex-col items-center text-center px-8 relative"
+              style={{ transitionDuration: '0.6s', transitionDelay: '0.4s' }}
+            >
+              <div className="relative mb-7">
+                <div className="step-icon-container w-[80px] h-[80px] rounded-full bg-[#2563EB]/10 border border-[#2563EB]/20 flex items-center justify-center relative z-10 transition-all duration-300">
+                  <Rocket className="w-8 h-8 text-[#2563EB]" />
+                </div>
+                <div 
+                  className="absolute top-[-4px] right-[-4px] w-6 h-6 rounded-full bg-[#2563EB] text-white font-sora text-[0.72rem] font-bold flex items-center justify-center border-2 border-[#0A0A0A] z-20"
+                >
+                  3
+                </div>
+              </div>
+              <h4 className="font-sora font-semibold text-[1.15rem] text-white mb-3">
+                Seu negócio no piloto automático
+              </h4>
+              <p className="font-inter text-[0.9rem] text-white/55 leading-[1.65] max-w-[240px] mx-auto">
+                Pronto. Sua IA já está atendendo clientes e criando conteúdo enquanto você foca no que importa: crescer.
+              </p>
+            </div>
+
+          </div>
+
+          {/* CTA ABAIXO DOS PASSOS */}
+          <div className="text-center mt-[72px]">
+            <a 
+              ref={scrollRef}
+              href="#"
+              className="scroll-animate transition-fade-scale btn inline-flex items-center gap-2.5 bg-[#2563EB] text-white px-9 py-3.5 rounded-lg font-medium transition-all duration-300 hover:bg-[#1E40AF] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(37,99,235,0.4)] active:translate-y-0"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.5s' }}
+            >
+              Quero começar agora
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SEÇÃO DIFERENCIAIS */}
+      <section 
+        id="funcionalidades" 
+        className="w-full bg-[#F5F5F0] border-t border-black/5" 
+        style={{ scrollMarginTop: '80px', padding: '120px 0' }}
+      >
+        <style dangerouslySetInnerHTML={{ __html: `
+          @media (max-width: 768px) {
+            #funcionalidades {
+              padding: 72px 0 !important;
+            }
+          }
+        `}} />
+
+        <div className="max-w-[1200px] mx-auto px-6">
+          
+          {/* CABEÇALHO DA SEÇÃO */}
+          <div className="text-center mb-[64px] flex flex-col items-center">
+            {/* Eyebrow */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up flex items-center gap-4"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0s' }}
+            >
+              <div className="w-10 h-[2px] bg-[#2563EB] rounded-[2px]"></div>
+              <span className="font-inter text-[0.75rem] font-semibold tracking-[0.12em] text-[#2563EB] uppercase">
+                DIFERENCIAIS
+              </span>
+              <div className="w-10 h-[2px] bg-[#2563EB] rounded-[2px]"></div>
+            </div>
+
+            {/* H2 */}
+            <h2 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up font-sora font-bold text-[#1A1A1A] leading-[1.15] tracking-[-0.02em] mt-3.5"
+              style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', transitionDuration: '0.6s', transitionDelay: '0.1s' }}
+            >
+              O que só a Crescendo com IA tem
+            </h2>
+
+            {/* Subtexto */}
+            <p 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up font-inter text-base font-normal text-[#6B7280] leading-[1.6] mt-3.5 max-w-[500px] mx-auto"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.2s' }}
+            >
+              Funcionalidades pensadas para o dia a dia real do empresário brasileiro. Não é promessa — é entrega.
+            </p>
+          </div>
+
+          {/* GRID DE CARDS */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {/* Card 1 */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up feature-card p-8 px-7"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.05s' }}
+            >
+              <div className="feature-card-icon-wrapper">
+                <Brain className="w-[22px] h-[22px] text-[#2563EB]" />
+              </div>
+              <h4 className="font-sora font-semibold text-[1rem] tracking-tight text-[#1A1A1A] mb-2.5">
+                IA que Aprende com Você
+              </h4>
+              <p className="font-inter text-[0.875rem] text-[#6B7280] leading-[1.65]">
+                Quanto mais você usa, mais inteligente ela fica. As sugestões de resposta e os posts criados ficam cada vez mais alinhados com o seu tom de voz e segmento.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up feature-card p-8 px-7"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.1s' }}
+            >
+              <div className="feature-card-icon-wrapper">
+                <LayoutDashboard className="w-[22px] h-[22px] text-[#2563EB]" />
+              </div>
+              <h4 className="font-sora font-semibold text-[1rem] tracking-tight text-[#1A1A1A] mb-2.5">
+                Controle Total em Um Painel
+              </h4>
+              <p className="font-inter text-[0.875rem] text-[#6B7280] leading-[1.65]">
+                Acompanhe atendimentos em andamento, posts publicados e métricas importantes em tempo real. Tudo centralizado, sem precisar abrir vários aplicativos.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up feature-card p-8 px-7"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.15s' }}
+            >
+              <div className="feature-card-icon-wrapper">
+                <Smartphone className="w-[22px] h-[22px] text-[#2563EB]" />
+              </div>
+              <h4 className="font-sora font-semibold text-[1rem] tracking-tight text-[#1A1A1A] mb-2.5">
+                Acesse de Qualquer Lugar
+              </h4>
+              <p className="font-inter text-[0.875rem] text-[#6B7280] leading-[1.65]">
+                Plataformas totalmente responsivas. Gerencie seu atendimento e seu conteúdo direto do celular, onde você estiver.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up feature-card p-8 px-7"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.2s' }}
+            >
+              <div className="feature-card-icon-wrapper">
+                <Clock className="w-[22px] h-[22px] text-[#2563EB]" />
+              </div>
+              <h4 className="font-sora font-semibold text-[1rem] tracking-tight text-[#1A1A1A] mb-2.5">
+                Economia de Horas por Semana
+              </h4>
+              <p className="font-inter text-[0.875rem] text-[#6B7280] leading-[1.65]">
+                O que levava horas de trabalho manual, agora leva minutos com a IA. Mais tempo para você focar no que realmente faz seu negócio crescer.
+              </p>
+            </div>
+
+            {/* Card 5 */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up feature-card p-8 px-7"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.25s' }}
+            >
+              <div className="feature-card-icon-wrapper">
+                <Headphones className="w-[22px] h-[22px] text-[#2563EB]" />
+              </div>
+              <h4 className="font-sora font-semibold text-[1rem] tracking-tight text-[#1A1A1A] mb-2.5">
+                Suporte Humanizado de Verdade
+              </h4>
+              <p className="font-inter text-[0.875rem] text-[#6B7280] leading-[1.65]">
+                Nada de robô te atendendo quando você mais precisa. Nosso time está disponível para resolver qualquer dúvida com rapidez e atenção.
+              </p>
+            </div>
+
+            {/* Card 6 */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up feature-card p-8 px-7"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.3s' }}
+            >
+              <div className="feature-card-icon-wrapper">
+                <Globe className="w-[22px] h-[22px] text-[#2563EB]" />
+              </div>
+              <h4 className="font-sora font-semibold text-[1rem] tracking-tight text-[#1A1A1A] mb-2.5">
+                Feito para o Empresário Brasileiro
+              </h4>
+              <p className="font-inter text-[0.875rem] text-[#6B7280] leading-[1.65]">
+                Interface em português, suporte em português, linguagem simples. Criamos nossas plataformas entendendo a realidade do mercado brasileiro.
+              </p>
+            </div>
+
+          </div>
+
+          {/* BANNER DE DESTAQUE */}
+          <div 
+            ref={scrollRef}
+            className="scroll-animate transition-fade-scale mt-12 rounded-[20px] p-10 md:p-12 max-md:p-7 relative overflow-hidden flex items-center justify-between gap-8 flex-wrap"
+            style={{ 
+              background: 'linear-gradient(135deg, var(--color-blue) 0%, var(--color-blue-dark) 100%)',
+              transitionDuration: '0.6s', 
+              transitionDelay: '0.1s' 
+            }}
+          >
+            {/* Círculo decorativo absoluto */}
+            <div 
+              className="absolute right-[-40px] top-[-40px] w-[200px] h-[200px] rounded-full pointer-events-none"
+              style={{ background: 'rgba(255,255,255,0.05)' }}
+            ></div>
+
+            {/* Lado esquerdo */}
+            <div className="flex flex-col items-start relative z-10">
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles className="w-5 h-5 text-white opacity-90" />
+                <span className="font-inter text-[0.75rem] font-semibold text-white/70 uppercase tracking-[0.1em]">
+                  Diferencial exclusivo
+                </span>
+              </div>
+              <h3 className="font-sora font-bold text-white leading-snug" style={{ fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)' }}>
+                IA com contexto real do seu negócio
+              </h3>
+              <p className="font-inter text-[0.9rem] text-white/75 leading-[1.6] mt-2 max-w-[520px]">
+                Nossa IA não é genérica. Ela aprende o seu segmento, o seu tom de voz e o perfil dos seus clientes para entregar sugestões que realmente fazem sentido.
+              </p>
+            </div>
+
+            {/* Lado direito */}
+            <div className="relative z-10 max-md:w-full">
+              <a 
+                href="#"
+                className="btn inline-flex items-center justify-center bg-white text-[#2563EB] px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all duration-300 hover:bg-[#DBEAFE] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] active:translate-y-0 max-md:w-full"
+              >
+                Fale com um Consultor
+              </a>
             </div>
           </div>
 
