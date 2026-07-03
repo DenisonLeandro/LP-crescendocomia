@@ -9,7 +9,20 @@ import {
   X,
   Building2,
   TrendingUp,
-  Check
+  Check,
+  MessageSquare,
+  PenTool,
+  ExternalLink,
+  Lock,
+  Users,
+  BarChart3,
+  Clock,
+  Calendar,
+  RefreshCw,
+  MoreVertical,
+  Send,
+  Image,
+  CheckCheck
 } from 'lucide-react';
 
 // Custom Hook to manage scroll-based fade-in animations using IntersectionObserver
@@ -469,6 +482,91 @@ export default function LandingPage() {
           animation: floatSutil 4s ease-in-out infinite alternate;
         }
 
+        /* ------------------------------------------------------------- */
+        /* Mockups & Section 3 Animations                                */
+        /* ------------------------------------------------------------- */
+
+        /* WhatsApp mockup float */
+        .whatsapp-float {
+          animation: floatWhatsApp 5s ease-in-out infinite alternate;
+        }
+        @keyframes floatWhatsApp {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-8px); }
+        }
+
+        /* Post Dashboard mockup float (dessincronizado) */
+        .dashboard-float {
+          animation: floatDashboard 6s ease-in-out infinite alternate;
+          animation-delay: 1s;
+        }
+        @keyframes floatDashboard {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-10px); }
+        }
+
+        /* Sparkles glow */
+        .sparkle-glow {
+          animation: sparkleGlowAnim 2s ease-in-out infinite;
+        }
+        @keyframes sparkleGlowAnim {
+          0%, 100% { opacity: 0.7; }
+          50% { opacity: 1; filter: drop-shadow(0 0 2px #60A5FA); }
+        }
+
+        /* Shimmer effect for creating post */
+        .shimmer-bg {
+          position: relative;
+          overflow: hidden;
+        }
+        .shimmer-bg::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          transform: translateX(-100%);
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2) 20%,
+            rgba(255, 255, 255, 0.4) 60%,
+            transparent
+          );
+          animation: shimmerAnim 1.5s infinite;
+        }
+        @keyframes shimmerAnim {
+          100% { transform: translateX(100%); }
+        }
+
+        /* Status Dot Pulse */
+        .dot-pulse {
+          position: relative;
+        }
+        .dot-pulse::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          background-color: inherit;
+          animation: dotPulseKeyframe 1.6s infinite ease-out;
+        }
+        @keyframes dotPulseKeyframe {
+          0% { transform: scale(1); opacity: 0.8; }
+          100% { transform: scale(2.4); opacity: 0; }
+        }
+
+        /* Card container hover */
+        .platform-card {
+          background-color: var(--color-white);
+          border-radius: 24px;
+          border: 1px solid rgba(37, 99, 235, 0.08);
+          box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 20px 60px -10px rgba(37, 99, 235, 0.08);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .platform-card:hover {
+          box-shadow: 0 8px 12px -2px rgba(0,0,0,0.08), 0 30px 80px -15px rgba(37, 99, 235, 0.14);
+          transform: translateY(-4px);
+        }
+
         /* Accessibility: Prefers reduced motion overrides */
         @media (prefers-reduced-motion: reduce) {
           * {
@@ -488,7 +586,12 @@ export default function LandingPage() {
           .mockup-3d-float {
             transform: perspective(1200px) rotateY(-8deg) rotateX(3deg) !important;
           }
-          .float-sutil-anim {
+          .float-sutil-anim,
+          .whatsapp-float,
+          .dashboard-float,
+          .sparkle-glow,
+          .dot-pulse::after,
+          .shimmer-bg::after {
             animation: none !important;
           }
           video {
@@ -885,6 +988,402 @@ export default function LandingPage() {
               >
                 Ver nossas plataformas &rarr;
               </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SEÇÃO PLATAFORMAS */}
+      <section 
+        id="plataformas" 
+        className="w-full bg-[#FAF9F6] border-t border-black/5"
+        style={{ scrollMarginTop: '80px', padding: '120px 0' }}
+      >
+        <style dangerouslySetInnerHTML={{ __html: `
+          @media (max-width: 768px) {
+            #plataformas {
+              padding: 72px 0 !important;
+            }
+          }
+        `}} />
+        
+        {/* Container Interno */}
+        <div className="max-w-[1200px] mx-auto px-6">
+          
+          {/* CABEÇALHO DA SEÇÃO */}
+          <div className="text-center mb-[80px] max-md:mb-[48px] flex flex-col items-center">
+            {/* Eyebrow */}
+            <div 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up flex items-center gap-4"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0s' }}
+            >
+              <div className="w-10 h-[2px] bg-[#2563EB] rounded-[2px]"></div>
+              <span className="font-inter text-[0.75rem] font-semibold tracking-[0.12em] text-[#2563EB] uppercase">
+                NOSSAS PLATAFORMAS
+              </span>
+              <div className="w-10 h-[2px] bg-[#2563EB] rounded-[2px]"></div>
+            </div>
+
+            {/* H2 Sora */}
+            <h2 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up font-sora font-bold text-[#1A1A1A] leading-[1.15] tracking-[-0.02em] mt-3.5 max-w-[620px] mx-auto"
+              style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', transitionDuration: '0.6s', transitionDelay: '0.1s' }}
+            >
+              Conheça as ferramentas que vão revolucionar seu negócio
+            </h2>
+
+            {/* Subtexto */}
+            <p 
+              ref={scrollRef}
+              className="scroll-animate transition-fade-slide-up font-inter text-base font-normal text-[#6B7280] leading-[1.6] mt-3.5 max-w-[500px] mx-auto"
+              style={{ transitionDuration: '0.5s', transitionDelay: '0.2s' }}
+            >
+              Cada plataforma foi criada para resolver uma dor real do empresário. Escolha a sua ou use as duas juntas.
+            </p>
+          </div>
+
+          {/* PLATAFORMA 1 — IA WHATSAPP */}
+          <div 
+            ref={scrollRef}
+            className="scroll-animate transition-fade-slide-up platform-card p-8 md:p-[64px] max-md:p-8 overflow-hidden relative mb-[48px]"
+            style={{ transitionDuration: '0.7s', transitionDelay: '0s' }}
+          >
+            {/* Círculo decorativo absoluto */}
+            <div 
+              className="absolute top-[-60px] right-[-60px] w-[300px] h-[300px] rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.04) 0%, transparent 70%)', zIndex: 0 }}
+            ></div>
+
+            {/* Grid Interno */}
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-[64px] items-center">
+              
+              {/* Coluna Esquerda: Texto */}
+              <div className="flex flex-col items-start w-full">
+                {/* Header do produto */}
+                <div className="flex items-center gap-3.5 mb-6">
+                  <div 
+                    className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center flex-shrink-0"
+                    style={{ 
+                      background: 'linear-gradient(135deg, rgba(37,99,235,0.12), rgba(37,99,235,0.06))',
+                      border: '1px solid rgba(37,99,235,0.15)'
+                    }}
+                  >
+                    <MessageSquare className="w-6 h-6 text-[#2563EB]" />
+                  </div>
+                  <span className="bg-[#DBEAFE] text-[#2563EB] rounded-full px-3 py-1 font-inter text-[0.78rem] font-semibold">
+                    IA WhatsApp
+                  </span>
+                </div>
+
+                {/* H3 */}
+                <h3 className="font-sora font-bold text-[#1A1A1A] leading-[1.2] tracking-[-0.02em] mb-4" style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.9rem)' }}>
+                  Atendimento Inteligente no WhatsApp
+                </h3>
+
+                {/* Descrição */}
+                <p className="font-inter text-[0.95rem] text-[#6B7280] leading-[1.7] mb-8">
+                  Sua equipe atende pelo WhatsApp com sugestões de resposta geradas por IA em tempo real. Controle de atendimento, múltiplos atendentes e histórico organizado — tudo em um só lugar.
+                </p>
+
+                {/* Features 2x2 */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                  <div className="flex items-start gap-2.5">
+                    <Zap className="w-4.5 h-4.5 text-[#2563EB] flex-shrink-0 mt-0.5" />
+                    <span className="font-inter text-[0.875rem] font-semibold text-[#374151]">Respostas sugeridas por IA em tempo real</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Users className="w-4.5 h-4.5 text-[#2563EB] flex-shrink-0 mt-0.5" />
+                    <span className="font-inter text-[0.875rem] font-semibold text-[#374151]">Múltiplos atendentes simultâneos</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <BarChart3 className="w-4.5 h-4.5 text-[#2563EB] flex-shrink-0 mt-0.5" />
+                    <span className="font-inter text-[0.875rem] font-semibold text-[#374151]">Painel de métricas e controle</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Clock className="w-4.5 h-4.5 text-[#2563EB] flex-shrink-0 mt-0.5" />
+                    <span className="font-inter text-[0.875rem] font-semibold text-[#374151]">Automação 24h por dia</span>
+                  </div>
+                </div>
+
+                {/* Divisor */}
+                <div className="w-full h-[1px] my-8" style={{ background: 'linear-gradient(to right, var(--color-gray-300), transparent)' }}></div>
+
+                {/* Rodapé CTA */}
+                <div className="flex items-center justify-between w-full flex-wrap gap-4">
+                  <a 
+                    href="#" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn inline-flex items-center gap-2 bg-[#2563EB] text-white px-7 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-[#1E40AF] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(37,99,235,0.35)] active:translate-y-0"
+                  >
+                    Acessar Plataforma
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                  <div className="flex items-center gap-1.5 font-inter text-[0.8rem] text-[#9CA3AF]">
+                    <Lock className="w-3.5 h-3.5 text-[#9CA3AF]" />
+                    <span>Acesso exclusivo para clientes</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Coluna Direita: Mockup (WhatsApp) */}
+              <div 
+                ref={scrollRef}
+                className="scroll-animate transition-fade-slide-right flex justify-center w-full lg:order-2 max-lg:order-first"
+                style={{ transitionDuration: '0.7s', transitionDelay: '0.2s' }}
+              >
+                {/* Smartphone mockup */}
+                <div 
+                  className="whatsapp-float w-full max-w-[360px] bg-[#1F2937] rounded-[20px] overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.05)]"
+                >
+                  {/* Header */}
+                  <div className="bg-[#111827] p-3.5 px-4 flex items-center justify-between border-b border-white/5 font-inter">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#667EEA] to-[#764BA2] flex items-center justify-center text-white text-[0.75rem] font-bold">
+                        CL
+                      </div>
+                      <div>
+                        <div className="font-semibold text-[0.85rem] text-white leading-tight">Cliente • João</div>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="w-2 h-2 rounded-full bg-[#4ADE80] dot-pulse"></span>
+                          <span className="text-[0.72rem] text-[#4ADE80] leading-none">online</span>
+                        </div>
+                      </div>
+                    </div>
+                    <MoreVertical className="w-[18px] h-[18px] text-white/40 cursor-pointer" />
+                  </div>
+
+                  {/* Mensagens */}
+                  <div className="p-4 flex flex-col gap-3 min-h-[220px] font-inter">
+                    
+                    {/* Cliente */}
+                    <div className="self-start bg-[#374151] text-white/90 rounded-[16px] rounded-tl-none p-3 max-w-[80%] text-[0.83rem] leading-normal shadow-sm">
+                      <p>Olá! Quero saber mais sobre os planos disponíveis.</p>
+                      <div className="text-[0.68rem] text-white/35 text-right mt-1">14:32</div>
+                    </div>
+
+                    {/* Atendente */}
+                    <div className="self-end bg-[#2563EB] text-white rounded-[16px] rounded-tr-none p-3 max-w-[80%] text-[0.83rem] leading-normal shadow-sm">
+                      <p>Olá, João! Que bom falar com você 😊</p>
+                      <div className="flex items-center justify-end gap-1 mt-1">
+                        <span className="text-[0.68rem] text-white/60">14:33</span>
+                        <CheckCheck className="w-3 h-3 text-[#93C5FD]" />
+                      </div>
+                    </div>
+
+                    {/* Sugestão da IA */}
+                    <div className="w-full bg-gradient-to-br from-[#2563EB]/18 to-[#2563EB]/8 border border-[#2563EB]/30 p-3.5 rounded-[14px] mt-1.5 shadow-md">
+                      <div className="flex items-center gap-1.5 text-[#60A5FA] mb-2 font-inter font-bold text-[0.7rem] tracking-wider uppercase">
+                        <Sparkles className="w-3 h-3 sparkle-glow" />
+                        Sugestão da IA
+                      </div>
+                      <p className="text-white/85 text-[0.81rem] leading-relaxed">
+                        Temos 3 planos disponíveis. Com base no perfil do João, recomendo o Plano Pro. Posso enviar os detalhes?
+                      </p>
+                      <div className="flex gap-2 mt-3 font-semibold">
+                        <button className="bg-[#2563EB] text-white text-[0.72rem] px-3 py-1.5 rounded-lg hover:bg-[#1E40AF] transition-colors focus:outline-none">
+                          Usar resposta
+                        </button>
+                        <button className="bg-transparent border border-white/20 text-white/70 text-[0.72rem] px-3 py-1.5 rounded-lg hover:bg-white/5 hover:text-white transition-colors focus:outline-none">
+                          Editar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Input Footer */}
+                  <div className="bg-[#111827] p-3 px-4 flex items-center gap-3 border-t border-white/5 font-inter">
+                    <div className="flex-1 bg-[#1F2937] rounded-full px-4 py-2 text-[0.8rem] text-white/25">
+                      Digite uma mensagem...
+                    </div>
+                    <Send className="w-[18px] h-[18px] text-[#2563EB] cursor-pointer" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* SEPARADOR ENTRE PLATAFORMAS */}
+          <div className="my-[48px] flex items-center gap-5">
+            <div className="flex-1 h-[1px] bg-[#D1D5DB] opacity-50"></div>
+            <span className="font-inter text-[0.85rem] font-medium text-[#9CA3AF] whitespace-nowrap">
+              e também
+            </span>
+            <div className="flex-1 h-[1px] bg-[#D1D5DB] opacity-50"></div>
+          </div>
+
+          {/* PLATAFORMA 2 — MEGA AUTOMAÇÃO DE POST */}
+          <div 
+            ref={scrollRef}
+            className="scroll-animate transition-fade-slide-up platform-card p-8 md:p-[64px] max-md:p-8 overflow-hidden relative"
+            style={{ transitionDuration: '0.7s', transitionDelay: '0s' }}
+          >
+            {/* Círculo decorativo absoluto oposto */}
+            <div 
+              className="absolute bottom-[-60px] left-[-60px] w-[300px] h-[300px] rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.04) 0%, transparent 70%)', zIndex: 0 }}
+            ></div>
+
+            {/* Grid Interno (Invertido no desktop) */}
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-[64px] items-center">
+              
+              {/* Coluna Esquerda: Mockup Dashboard (topo no mobile) */}
+              <div 
+                ref={scrollRef}
+                className="scroll-animate transition-fade-slide-left flex justify-center w-full lg:order-1 max-lg:order-first"
+                style={{ transitionDuration: '0.7s', transitionDelay: '0.2s' }}
+              >
+                {/* Dashboard mockup */}
+                <div 
+                  className="dashboard-float w-full max-w-[380px] bg-white rounded-[20px] border border-[#D1D5DB] overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,0,0,0.03)]"
+                >
+                  {/* Header */}
+                  <div className="bg-[#1A1A1A] p-3.5 px-4 flex items-center justify-between font-inter border-b border-black/5">
+                    <div className="flex items-center gap-2 text-white">
+                      <PenTool className="w-4 h-4 text-[#2563EB]" />
+                      <span className="font-sora font-semibold text-[0.85rem]">Mega Post IA</span>
+                    </div>
+                    <div className="bg-[#022c22] border border-[#166534] text-[#4ADE80] rounded-full px-2.5 py-0.5 text-[0.7rem] font-semibold flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#4ADE80] dot-pulse"></span>
+                      <span>IA Ativa</span>
+                    </div>
+                  </div>
+
+                  {/* Posts agendados */}
+                  <div className="p-4 bg-white flex flex-col font-inter">
+                    <div className="text-[0.72rem] font-semibold text-[#9CA3AF] tracking-[0.08em] uppercase mb-3">
+                      Posts desta semana
+                    </div>
+
+                    {/* Card 1: Publicado */}
+                    <div className="bg-[#F3F4F6] rounded-xl p-3 flex gap-3 items-start mb-2.5">
+                      <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] flex items-center justify-center flex-shrink-0">
+                        <Image className="w-[18px] h-[18px] text-white opacity-70" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-[0.8rem] text-[#1A1A1A] truncate">Dica do dia para negócios</div>
+                        <div className="text-[0.72rem] text-[#9CA3AF] mt-1">Seg, 14h00 • Instagram</div>
+                        <div className="inline-block bg-[#DCFCE7] text-[#16A34A] rounded-full px-2 py-0.5 text-[0.68rem] font-semibold mt-2">
+                          Publicado
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Card 2: Agendado */}
+                    <div className="bg-[#F3F4F6] rounded-xl p-3 flex gap-3 items-start mb-2.5">
+                      <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-[#F97316] to-[#EF4444] flex items-center justify-center flex-shrink-0">
+                        <Image className="w-[18px] h-[18px] text-white opacity-70" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-[0.8rem] text-[#1A1A1A] flex items-center gap-1">
+                          Como a IA te ajuda
+                          <Sparkles className="w-2.5 h-2.5 text-[#2563EB]" />
+                        </div>
+                        <div className="text-[0.72rem] text-[#9CA3AF] mt-1">Qua, 10h30 • Instagram + LinkedIn</div>
+                        <div className="inline-block bg-[#EFF6FF] text-[#2563EB] rounded-full px-2 py-0.5 text-[0.68rem] font-semibold mt-2">
+                          Agendado
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Card 3: Criando */}
+                    <div className="bg-[#F3F4F6] rounded-xl p-3 flex gap-3 items-start">
+                      <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-[#8B5CF6] to-[#3B82F6] flex items-center justify-center flex-shrink-0 shimmer-bg">
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium text-[0.8rem] text-[#9CA3AF]">Gerando conteúdo...</div>
+                        <div className="inline-block bg-[#F3E8FF] text-[#7C3AED] rounded-full px-2 py-0.5 text-[0.68rem] font-semibold mt-2 flex items-center gap-1.5 w-max">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] dot-pulse"></span>
+                          <span>Criando com IA</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  {/* Footer Dashboard */}
+                  <div className="bg-[#F3F4F6] p-3 px-4 flex items-center justify-between border-t border-[#E5E7EB] font-inter">
+                    <div className="font-medium text-[0.78rem] text-[#6B7280]">7 posts esta semana</div>
+                    <button className="bg-[#2563EB] text-white rounded-lg px-3 py-1.5 text-[0.75rem] font-medium hover:bg-[#1E40AF] transition-colors focus:outline-none">
+                      + Criar post
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Coluna Direita: Texto (Plataforma 2) */}
+              <div className="flex flex-col items-start w-full lg:order-2 max-lg:order-2">
+                {/* Header do produto */}
+                <div className="flex items-center gap-3.5 mb-6">
+                  <div 
+                    className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center flex-shrink-0"
+                    style={{ 
+                      background: 'linear-gradient(135deg, rgba(37,99,235,0.12), rgba(37,99,235,0.06))',
+                      border: '1px solid rgba(37,99,235,0.15)'
+                    }}
+                  >
+                    <PenTool className="w-6 h-6 text-[#2563EB]" />
+                  </div>
+                  <span className="bg-[#DBEAFE] text-[#2563EB] rounded-full px-3 py-1 font-inter text-[0.78rem] font-semibold">
+                    Mega Automação de Post
+                  </span>
+                </div>
+
+                {/* H3 */}
+                <h3 className="font-sora font-bold text-[#1A1A1A] leading-[1.2] tracking-[-0.02em] mb-4" style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.9rem)' }}>
+                  Conteúdo para Redes Sociais no Automático
+                </h3>
+
+                {/* Descrição */}
+                <p className="font-inter text-[0.95rem] text-[#6B7280] leading-[1.7] mb-8">
+                  A IA cria os textos, escolhe os melhores horários e publica automaticamente nas suas redes sociais. Você foca no que importa enquanto seu perfil cresce sozinho.
+                </p>
+
+                {/* Features 2x2 */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                  <div className="flex items-start gap-2.5">
+                    <Sparkles className="w-[18px] h-[18px] text-[#2563EB] flex-shrink-0 mt-0.5" />
+                    <span className="font-inter text-[0.875rem] font-semibold text-[#374151]">IA cria textos e legendas automaticamente</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <Calendar className="w-[18px] h-[18px] text-[#2563EB] flex-shrink-0 mt-0.5" />
+                    <span className="font-inter text-[0.875rem] font-semibold text-[#374151]">Agendamento inteligente por horário</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <TrendingUp className="w-[18px] h-[18px] text-[#2563EB] flex-shrink-0 mt-0.5" />
+                    <span className="font-inter text-[0.875rem] font-semibold text-[#374151]">Posts otimizados para engajamento</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <RefreshCw className="w-[18px] h-[18px] text-[#2563EB] flex-shrink-0 mt-0.5" />
+                    <span className="font-inter text-[0.875rem] font-semibold text-[#374151]">Conteúdo constante sem esforço</span>
+                  </div>
+                </div>
+
+                {/* Divisor */}
+                <div className="w-full h-[1px] my-8" style={{ background: 'linear-gradient(to right, var(--color-gray-300), transparent)' }}></div>
+
+                {/* Rodapé CTA */}
+                <div className="flex items-center justify-between w-full flex-wrap gap-4">
+                  <a 
+                    href="#" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn inline-flex items-center gap-2 bg-[#2563EB] text-white px-7 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-[#1E40AF] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(37,99,235,0.35)] active:translate-y-0"
+                  >
+                    Acessar Plataforma
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                  <div className="flex items-center gap-1.5 font-inter text-[0.8rem] text-[#9CA3AF]">
+                    <Lock className="w-3.5 h-3.5 text-[#9CA3AF]" />
+                    <span>Acesso exclusivo para clientes</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
