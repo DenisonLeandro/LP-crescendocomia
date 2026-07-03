@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crescendo com IA - Seu Negócio no Piloto Automático</title>
+  
+  <!-- Load Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Configure Tailwind CSS Theme configuration to match color requirements -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontSize: {
+            '3.5xl': '2rem',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Load Babel Standalone to compile JSX directly in browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* Basic default background styling fallback */
+    body {
+      background-color: #0A0A0A;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Container where the React app will render -->
+  <div id="root"></div>
+
+  <!-- React code with Babel compiler inside index.html -->
+  <script type="text/babel" data-type="module">
+    import React, { useState, useEffect, useRef } from 'https://esm.sh/react@18.2.0';
+    import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
+    import {
+      Sparkles,
+      Zap,
+      ArrowRight,
+      ChevronDown,
+      Star,
+      Menu,
+      X
+    } from 'https://esm.sh/lucide-react@0.244.0';
+
+    function LandingPage() {
+      const [scrolled, setScrolled] = useState(false);
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+      // Monitor page scroll to update Navbar appearance
+      useEffect(() => {
+        const handleScroll = () => {
+          if (window.scrollY > 50) {
+            setScrolled(true);
+          } else {
+            setScrolled(false);
+          }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      const handleLinkClick = () => {
+        setMobileMenuOpen(false);
+      };
+
+      return (
+        <div className="min-h-screen bg-black text-white relative selection:bg-blue-light selection:text-blue-primary font-inter">
+          {/* 
+            Embedded CSS Stylesheet
+            Specifies absolute scales, custom animations, mesh gradient positions and responsive overrides.
+          */}
+          <style dangerouslySetInnerHTML={{ __html: `
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap');
+
+            :root {
+              --color-offwhite: #F5F5F0;
+              --color-offwhite-warm: #FAF9F6;
+              --color-blue: #2563EB;
+              --color-blue-dark: #1E40AF;
+              --color-blue-light: #DBEAFE;
+              --color-blue-glow: rgba(37, 99, 235, 0.15);
+              --color-black: #0A0A0A;
+              --color-gray-900: #1A1A1A;
+              --color-gray-700: #374151;
+              --color-gray-600: #6B7280;
+              --color-gray-400: #9CA3AF;
+              --color-gray-300: #D1D5DB;
+              --color-gray-100: #F3F4F6;
+              --color-white: #FFFFFF;
+            }
+
+            /* Scale Rules */
+            .hero-headline {
+              font-family: "Sora", sans-serif;
+              font-size: clamp(2.2rem, 5vw, 3.8rem);
+              font-weight: 700;
+              line-height: 1.08;
+              letter-spacing: -0.03em;
+              color: var(--color-white);
+            }
+
+            .hero-sub {
+              font-family: "Inter", sans-serif;
+              font-size: clamp(1rem, 2vw, 1.25rem);
+              font-weight: 400;
+              line-height: 1.6;
+              color: rgba(255, 255, 255, 0.78);
+            }
+
+            .nav-link {
+              font-family: "Inter", sans-serif;
+              font-size: 0.9rem;
+              font-weight: 500;
+              letter-spacing: 0.01em;
+            }
+
+            .hero-badge {
+              font-family: "Inter", sans-serif;
+              font-size: 0.8rem;
+              font-weight: 500;
+              letter-spacing: 0.04em;
+            }
+
+            .btn {
+              font-family: "Inter", sans-serif;
+              font-size: 0.95rem;
+              font-weight: 500;
+            }
+
+            /* ------------------------------------------------------------- */
+            /* Custom Animations & Keyframes                                 */
+            /* ------------------------------------------------------------- */
+
+            /* Smooth Navbar State Shift */
+            .navbar-main {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              z-index: 1000;
+              transition: all 0.4s ease;
+              background-color: transparent;
+              border-bottom: 1px solid transparent;
+            }
+            .navbar-main.nav-scrolled {
+              background-color: rgba(10, 10, 10, 0.85);
+              backdrop-filter: blur(20px) saturate(180%);
+              -webkit-backdrop-filter: blur(20px) saturate(180%);
+              border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            }
+
+            /* Underline effect on links */
+            .link-hover-underline {
+              position: relative;
+              color: rgba(255, 255, 255, 0.65);
+              text-decoration: none;
+              transition: color 0.25s ease;
+            }
+            .link-hover-underline:hover {
+              color: rgba(255, 255, 255, 1);
+            }
+            .link-hover-underline::after {
+              content: '';
+              position: absolute;
+              bottom: -4px;
+              left: 0;
+              width: 0;
+              height: 2px;
+              background-color: var(--color-blue);
+              transition: width 0.3s ease;
+            }
+            .link-hover-underline:hover::after {
+              width: 100%;
+            }
+
+            /* Logo pulse animation */
+            .logo-icon-pulse {
+              animation: logoPulse 2.2s infinite ease-in-out;
+            }
+            @keyframes logoPulse {
+              0%, 100% { transform: scale(1); }
+              50% { transform: scale(1.15); }
+            }
+
+            /* Gradient mesh moving backgrounds */
+            .hero-mesh {
+              position: absolute;
+              inset: 0;
+              background-color: var(--color-black);
+              overflow: hidden;
+              z-index: 0;
+            }
+            .mesh-gradient {
+              position: absolute;
+              border-radius: 50%;
+              filter: blur(100px);
+              mix-blend-mode: screen;
+              will-change: transform;
+            }
+            .mesh-gradient-1 {
+              width: 650px;
+              height: 650px;
+              background: radial-gradient(circle, rgba(30, 64, 175, 0.22) 0%, transparent 80%);
+              top: -15%;
+              left: -10%;
+              animation: meshMove1 18s infinite alternate ease-in-out;
+            }
+            .mesh-gradient-2 {
+              width: 600px;
+              height: 600px;
+              background: radial-gradient(circle, rgba(37, 99, 235, 0.14) 0%, transparent 80%);
+              bottom: -15%;
+              right: -10%;
+              animation: meshMove2 24s infinite alternate ease-in-out;
+            }
+            .mesh-gradient-3 {
+              width: 450px;
+              height: 450px;
+              background: radial-gradient(circle, rgba(37, 99, 235, 0.07) 0%, transparent 80%);
+              top: 30%;
+              left: 30%;
+              animation: meshMove3 15s infinite alternate ease-in-out;
+            }
+
+            @keyframes meshMove1 {
+              0% { transform: translate(0, 0) scale(1); }
+              50% { transform: translate(120px, 80px) scale(1.1); }
+              100% { transform: translate(240px, -30px) scale(1); }
+            }
+            @keyframes meshMove2 {
+              0% { transform: translate(0, 0) scale(1); }
+              50% { transform: translate(-80px, -120px) scale(0.9); }
+              100% { transform: translate(-160px, 20px) scale(1); }
+            }
+            @keyframes meshMove3 {
+              0% { transform: scale(0.9) translate(0, 0); opacity: 0.5; }
+              50% { transform: scale(1.1) translate(40px, -40px); opacity: 1; }
+              100% { transform: scale(0.9) translate(0, 0); opacity: 0.5; }
+            }
+
+            /* Overlay with visual texture */
+            .hero-grain {
+              position: absolute;
+              inset: 0;
+              background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+              opacity: 0.035;
+              mix-blend-mode: overlay;
+              pointer-events: none;
+              z-index: 2;
+            }
+
+            /* Stagger entrance for page load */
+            .animate-hero {
+              animation-duration: 0.7s;
+              animation-fill-mode: both;
+              animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+              opacity: 0;
+            }
+            .anim-badge {
+              animation-name: slideUpFade;
+              animation-delay: 0.1s;
+            }
+            .anim-headline {
+              animation-name: slideUpFade;
+              animation-delay: 0.25s;
+              animation-duration: 0.8s;
+            }
+            .anim-sub {
+              animation-name: slideUpFade;
+              animation-delay: 0.4s;
+            }
+            .anim-buttons {
+              animation-name: slideUpFade;
+              animation-delay: 0.55s;
+            }
+            .anim-proof {
+              animation-name: slideUpFade;
+              animation-delay: 0.7s;
+              animation-duration: 0.5s;
+            }
+            .anim-mockup {
+              animation-name: mockupEntry;
+              animation-delay: 0.5s;
+              animation-duration: 0.9s;
+            }
+
+            @keyframes slideUpFade {
+              from {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+
+            @keyframes mockupEntry {
+              from {
+                opacity: 0;
+                transform: perspective(1200px) rotateY(-8deg) rotateX(3deg) translateX(40px) scale(0.95);
+              }
+              to {
+                opacity: 1;
+                transform: perspective(1200px) rotateY(-8deg) rotateX(3deg) translateX(0) scale(1);
+              }
+            }
+
+            /* 3D phone mockup hovering */
+            .mockup-3d-float {
+              perspective: 1200px;
+              transform-style: preserve-3d;
+              animation: floatMockup 6s infinite ease-in-out alternate;
+              animation-delay: 1.4s;
+            }
+            @keyframes floatMockup {
+              0% {
+                transform: perspective(1200px) rotateY(-8deg) rotateX(3deg) translateY(0);
+              }
+              100% {
+                transform: perspective(1200px) rotateY(-8deg) rotateX(3deg) translateY(-10px);
+              }
+            }
+
+            /* Chat bubbles typewriter appearance */
+            .chat-bubble-entry {
+              opacity: 0;
+              animation: bubbleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
+            .bubble-delay-1 {
+              animation-delay: 1.4s;
+            }
+            .bubble-delay-2 {
+              animation-delay: 2.2s;
+            }
+            .bubble-delay-3 {
+              animation-delay: 3.4s;
+              animation-duration: 0.8s;
+            }
+
+            @keyframes bubbleIn {
+              from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.98);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+              }
+            }
+
+            /* Underline styling for highlighted text */
+            .highlight-text-gradient {
+              background: linear-gradient(135deg, #2563EB, #60A5FA);
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+
+            /* Mobile menu overlays styles */
+            .mobile-menu-overlay {
+              position: fixed;
+              inset: 0;
+              width: 100vw;
+              height: 100vh;
+              background: rgba(10, 10, 10, 0.97);
+              backdrop-filter: blur(24px);
+              -webkit-backdrop-filter: blur(24px);
+              z-index: 999;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s ease;
+              opacity: 0;
+              visibility: hidden;
+            }
+            .mobile-menu-overlay.open {
+              opacity: 1;
+              visibility: visible;
+            }
+
+            .mobile-nav-link {
+              font-family: "Sora", sans-serif;
+              font-size: 1.5rem;
+              font-weight: 600;
+              color: var(--color-white);
+              text-decoration: none;
+              opacity: 0;
+              transform: translateY(20px);
+              transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .mobile-menu-overlay.open .mobile-nav-link {
+              opacity: 1;
+              transform: translateY(0);
+            }
+            .mobile-menu-overlay.open .ml-1 { transition-delay: 0.1s; }
+            .mobile-menu-overlay.open .ml-2 { transition-delay: 0.15s; }
+            .mobile-menu-overlay.open .ml-3 { transition-delay: 0.2s; }
+            .mobile-menu-overlay.open .ml-4 { transition-delay: 0.25s; }
+            .mobile-menu-overlay.open .mobile-cta-btn { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+
+            .mobile-cta-btn {
+              opacity: 0;
+              transform: translateY(20px);
+              transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            /* Accessibility: Prefers reduced motion overrides */
+            @media (prefers-reduced-motion: reduce) {
+              * {
+                animation-duration: 0.01ms !important;
+                animation-delay: 0s !important;
+                transition-duration: 0.01ms !important;
+              }
+              .animate-hero,
+              .chat-bubble-entry,
+              .logo-icon-pulse,
+              .mockup-3d-float {
+                opacity: 1 !important;
+                transform: none !important;
+                animation: none !important;
+              }
+              .mockup-3d-float {
+                transform: perspective(1200px) rotateY(-8deg) rotateX(3deg) !important;
+              }
+            }
+          ` }} />
+
+          {/* NAVBAR */}
+          <nav className={`navbar-main \${scrolled ? 'nav-scrolled shadow-lg' : ''}\`}>
+            <div className="max-w-[1200px] mx-auto px-6 h-[72px] flex items-center justify-between">
+              
+              {/* Left - Logo */}
+              <a href="#" className="flex items-center gap-2 group">
+                <Sparkles className="w-5 h-5 text-[#2563EB] logo-icon-pulse" />
+                <span className="font-sora text-[1.1rem] font-bold text-white tracking-tight">
+                  Crescendo <span className="text-[#2563EB]">com IA</span>
+                </span>
+              </a>
+
+              {/* Center - Links (Desktop) */}
+              <div className="hidden md:flex items-center gap-8">
+                <a href="#sobre" className="nav-link link-hover-underline">Sobre</a>
+                <a href="#plataformas" className="nav-link link-hover-underline">Plataformas</a>
+                <a href="#como-funciona" className="nav-link link-hover-underline">Como Funciona</a>
+                <a href="#faq" className="nav-link link-hover-underline">FAQ</a>
+              </div>
+
+              {/* Right - Button (Desktop) */}
+              <div className="hidden md:block">
+                <a 
+                  href="#"
+                  className="btn inline-flex items-center justify-center bg-[#2563EB] text-white px-6 py-2.5 rounded-lg font-medium cursor-pointer transition-all duration-250 hover:bg-[#1E40AF] hover:-translate-y-[1px] hover:shadow-[0_4px_12px_rgba(37,99,235,0.35)] active:translate-y-0"
+                >
+                  Fale com um Consultor
+                </a>
+              </div>
+
+              {/* Mobile Hamburger menu */}
+              <button 
+                onClick={() => setMobileMenuOpen(true)}
+                className="md:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-colors focus:outline-none"
+                aria-label="Open navigation menu"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+            </div>
+          </nav>
+
+          {/* MOBILE MENU OVERLAY */}
+          <div className={\`mobile-menu-overlay \${mobileMenuOpen ? 'open' : ''}\`}>
+            {/* Close Button */}
+            <button 
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute top-5 right-6 p-2 text-white hover:bg-white/10 rounded-lg transition-colors focus:outline-none"
+              aria-label="Close navigation menu"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Vertical Links stack */}
+            <div className="flex flex-col items-center gap-7">
+              <a href="#sobre" onClick={handleLinkClick} className="mobile-nav-link ml-1">Sobre</a>
+              <a href="#plataformas" onClick={handleLinkClick} className="mobile-nav-link ml-2">Plataformas</a>
+              <a href="#como-funciona" onClick={handleLinkClick} className="mobile-nav-link ml-3">Como Funciona</a>
+              <a href="#faq" onClick={handleLinkClick} className="mobile-nav-link ml-4">FAQ</a>
+              
+              <a 
+                href="#"
+                onClick={handleLinkClick}
+                className="mobile-cta-btn btn inline-flex items-center justify-center bg-[#2563EB] text-white px-8 py-3.5 rounded-lg w-full max-w-[320px] font-semibold hover:bg-[#1E40AF] transition-colors mt-4 text-center shadow-lg"
+              >
+                Fale com um Consultor
+              </a>
+            </div>
+          </div>
+
+          {/* HERO SECTION */}
+          <section className="relative w-full min-h-screen flex items-center pt-[72px] pb-12 overflow-hidden bg-black z-10">
+            
+            {/* Background Layers */}
+            <div className="hero-mesh">
+              <div className="mesh-gradient mesh-gradient-1"></div>
+              <div className="mesh-gradient mesh-gradient-2"></div>
+              <div className="mesh-gradient mesh-gradient-3"></div>
+            </div>
+            <div className="hero-grain"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/30 to-[#0A0A0A]/60 pointer-events-none z-1"></div>
+
+            {/* Hero Content Grid */}
+            <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Left Column: Copywriting */}
+              <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+                {/* Badge */}
+                <div className="animate-hero anim-badge inline-flex items-center gap-1.5 bg-blue-primary/10 border border-blue-primary/20 px-4 py-1.5 rounded-full mb-6">
+                  <Zap className="w-3.5 h-3.5 text-[#2563EB]" />
+                  <span className="hero-badge text-[#2563EB] uppercase tracking-wider">
+                    Plataformas com Inteligência Artificial
+                  </span>
+                </div>
+
+                {/* Headline H1 */}
+                <h1 className="animate-hero anim-headline hero-headline mb-5 max-w-[620px]">
+                  Seu Negócio no Piloto Automático com <span className="highlight-text-gradient">Inteligência Artificial</span>
+                </h1>
+
+                {/* Sub-headline */}
+                <p className="animate-hero anim-sub hero-sub mb-8 max-w-[520px]">
+                  Automatize seu atendimento no WhatsApp e suas postagens nas redes sociais. Mais clientes, menos trabalho manual.
+                </p>
+
+                {/* Buttons Group */}
+                <div className="animate-hero anim-buttons flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-center">
+                  <a 
+                    href="#"
+                    className="btn inline-flex items-center justify-center gap-2 bg-[#2563EB] text-white px-7 py-3.5 rounded-lg w-full sm:w-auto font-medium transition-all duration-300 hover:bg-[#1E40AF] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(37,99,235,0.4)] active:translate-y-0 active:shadow-md"
+                  >
+                    Fale com um Consultor
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <a 
+                    href="#plataformas"
+                    className="btn inline-flex items-center justify-center gap-2 bg-transparent border border-white/25 text-white px-7 py-3.5 rounded-lg w-full sm:w-auto font-medium transition-all duration-200 hover:bg-white/8 hover:border-white/50"
+                  >
+                    Conheça as Plataformas
+                    <ChevronDown className="w-4 h-4" />
+                  </a>
+                </div>
+
+                {/* Social Proof Mini */}
+                <div className="animate-hero anim-proof flex flex-col sm:flex-row items-center gap-3 mt-10">
+                  <div className="flex -space-x-2">
+                    <div className="w-8 h-8 rounded-full border-2 border-black bg-[#374151] flex items-center justify-center text-[10px] font-bold text-gray-300">A</div>
+                    <div className="w-8 h-8 rounded-full border-2 border-black bg-[#6B7280] flex items-center justify-center text-[10px] font-bold text-gray-200">M</div>
+                    <div className="w-8 h-8 rounded-full border-2 border-black bg-[#9CA3AF] flex items-center justify-center text-[10px] font-bold text-gray-800">F</div>
+                    <div className="w-8 h-8 rounded-full border-2 border-black bg-[#D1D5DB] flex items-center justify-center text-[10px] font-bold text-gray-800">J</div>
+                  </div>
+                  <div className="flex items-center gap-2 font-inter text-sm text-white/60">
+                    <span>Mais de 500 empresários já usam</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                    <div className="flex items-center gap-1">
+                      <Star className="w-3.5 h-3.5 fill-[#FBBF24] text-[#FBBF24]" />
+                      <span className="font-semibold text-white">4.9</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: 3D Smartphone Mockup */}
+              <div className="animate-hero anim-mockup hidden lg:col-span-5 lg:flex justify-end pr-4">
+                <div className="mockup-3d-float w-[340px] p-5 rounded-[24px] bg-white/[0.04] border border-white/[0.07] backdrop-blur-md shadow-[0_25px_60px_rgba(0,0,0,0.55),0_0_40px_rgba(37,99,235,0.06)]">
+                  {/* Smartphone Chat Simulator Header */}
+                  <div className="flex items-center gap-3 border-b border-white/10 pb-4 mb-4 font-inter">
+                    <div className="w-9 h-9 rounded-full bg-[#1A1A1A] border border-white/10 flex items-center justify-center text-white text-xs font-semibold">
+                      C
+                    </div>
+                    <div>
+                      <h4 className="font-sora font-semibold text-xs text-white">Cliente</h4>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse"></span>
+                        <span className="text-[10px] text-gray-400 font-medium">online</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Chat simulated bubbles stack */}
+                  <div className="space-y-3.5 min-h-[290px] font-inter text-xs">
+                    
+                    {/* Bubble 1 (Received) */}
+                    <div className="chat-bubble-entry bubble-delay-1 flex flex-col items-start">
+                      <div className="bg-[#1A1A1A] border border-white/10 text-white/90 py-2.5 px-3.5 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed">
+                        <p>Olá, quanto custa o serviço?</p>
+                      </div>
+                    </div>
+
+                    {/* Bubble 2 (Sent) */}
+                    <div className="chat-bubble-entry bubble-delay-2 flex flex-col items-end">
+                      <div className="bg-[#2563EB] text-white py-2.5 px-3.5 rounded-2xl rounded-tr-none max-w-[85%] leading-relaxed shadow-md shadow-blue-primary/10">
+                        <p>Olá! Temos planos a partir de valores ideais para o seu negócio.</p>
+                      </div>
+                    </div>
+
+                    {/* Bubble 3 (Special IA Suggestion Card) */}
+                    <div className="chat-bubble-entry bubble-delay-3 flex flex-col items-start">
+                      <div className="w-full bg-gradient-to-br from-blue-primary/15 to-blue-primary/5 border border-blue-primary/20 p-3.5 rounded-2xl rounded-tl-none shadow-lg">
+                        {/* Suggestion header */}
+                        <div className="flex items-center gap-1.5 text-[#2563EB] mb-2 font-inter font-semibold text-[10px] tracking-wider uppercase">
+                          <Sparkles className="w-3.5 h-3.5 fill-[#2563EB]/10" />
+                          Sugestão IA
+                        </div>
+                        {/* Suggestion body copy */}
+                        <p className="text-gray-300 leading-relaxed font-medium">
+                          Com base no perfil do cliente, sugiro oferecer o Plano Premium com 20% de desconto.
+                        </p>
+                        {/* Interactive mini controls */}
+                        <div className="mt-3 flex gap-2">
+                          <button className="bg-[#2563EB] text-white py-1.5 px-3 rounded-md font-semibold text-[10px] hover:bg-[#1E40AF] transition-colors focus:outline-none">
+                            Usar resposta
+                          </button>
+                          <button className="bg-transparent border border-white/10 text-gray-400 py-1.5 px-3 rounded-md font-medium text-[10px] hover:bg-white/5 hover:text-white transition-colors focus:outline-none">
+                            Editar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<LandingPage />);
+  </script>
+</body>
+</html>

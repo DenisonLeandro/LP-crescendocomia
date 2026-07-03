@@ -1,0 +1,5 @@
+*.skill
+.gemini/
+.agents/
+unpacked_skills/
+extract_skills.ps1
