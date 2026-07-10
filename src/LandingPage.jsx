@@ -706,13 +706,9 @@ export default function LandingPage() {
 
                 {/* Rodapé CTA */}
                 <div className="flex items-center justify-between w-full flex-wrap gap-4">
-                  <a 
-                    href="#cta-final" 
+                  <a
+                    href="/ia-whatsapp.html"
                     className="btn inline-flex items-center gap-2 bg-blue-primary text-white px-7 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-blue-dark hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(37,99,235,0.35)] active:translate-y-0"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.getElementById('cta-final')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
                   >
                     Quero Acesso à Plataforma
                     <ExternalLink className="w-3.5 h-3.5" />

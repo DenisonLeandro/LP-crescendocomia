@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         megaAutomacao: resolve(__dirname, 'mega-automacao.html'),
+        iaWhatsapp: resolve(__dirname, 'ia-whatsapp.html'),
       },
     },
   },
