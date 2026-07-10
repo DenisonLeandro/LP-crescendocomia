@@ -4,3 +4,8 @@
 unpacked_skills/
 extract_skills.ps1
 frontend-design-unpacked/
+
+node_modules/
+dist/
+dist-ssr/
+*.local
